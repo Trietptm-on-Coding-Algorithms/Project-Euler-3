@@ -7,16 +7,12 @@ ARGV[0] = Integer(ARGV[0].tr(',', ''))    # For easy of use and readability.
 
 # Memoized fibonacci.
 def fib(limit = ARGV[0])
-	seq   = []                  # It would be superfluous to have this be [0, 1].
-	table = {0 => 0, 1 => 1}    # Lookup table for memoization. Currently includes beginning of fib sequence.
-	index = table.size
+	seq   = [0, 1]
+	seq_i = seq.size
 
-	loop do
-		table[index] = table[index - 2] + table[index - 1]
-		seq << table[index]
-
-		break if table[index] >= limit
-		index += 1
+	until seq.last >= limit
+		seq << seq[seq_i - 2] + seq[seq_i - 1]
+		seq_i += 1
 	end
 
 	seq[0...-1]    # Non-inclusively up to the last element. Effectively, fib sequence of [0, limit).
